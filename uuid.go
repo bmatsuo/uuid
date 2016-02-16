@@ -85,6 +85,34 @@ func Parse(s string) UUID {
 	return uuid[:]
 }
 
+func parse(s []byte) UUID {
+	if len(s) == 36+9 {
+		if !bytes.Equal(bytes.ToLower(s[:9]), []byte("urn:uuid:")) {
+			return nil
+		}
+		s = s[9:]
+	} else if len(s) != 36 {
+		return nil
+	}
+	if s[8] != '-' || s[13] != '-' || s[18] != '-' || s[23] != '-' {
+		return nil
+	}
+	var uuid [16]byte
+	for i, x := range [16]int{
+		0, 2, 4, 6,
+		9, 11,
+		14, 16,
+		19, 21,
+		24, 26, 28, 30, 32, 34} {
+		if v, ok := _xtob(s[x:]); !ok {
+			return nil
+		} else {
+			uuid[i] = v
+		}
+	}
+	return uuid[:]
+}
+
 // Equal returns true if uuid1 and uuid2 are equal.
 func Equal(uuid1, uuid2 UUID) bool {
 	return bytes.Equal(uuid1, uuid2)

@@ -24,7 +24,7 @@ func (u *UUID) UnmarshalText(data []byte) error {
 	if len(data) == 0 {
 		return nil
 	}
-	id := Parse(string(data))
+	id := parse(data)
 	if id == nil {
 		return errors.New("invalid UUID")
 	}
@@ -60,7 +60,7 @@ func (u Array) MarshalText() ([]byte, error) {
 
 // UnmarshalText implements encoding.TextUnmarshaler.
 func (u *Array) UnmarshalText(data []byte) error {
-	id := Parse(string(data))
+	id := parse(data)
 	if id == nil {
 		return errors.New("invalid UUID")
 	}

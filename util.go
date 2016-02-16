@@ -41,3 +41,9 @@ func xtob(x string) (byte, bool) {
 	b2 := xvalues[x[1]]
 	return (b1 << 4) | b2, b1 != 255 && b2 != 255
 }
+
+func _xtob(x []byte) (byte, bool) {
+	b1 := xvalues[x[0]]
+	b2 := xvalues[x[1]]
+	return (b1 << 4) | b2, b1 != 255 && b2 != 255
+}
